@@ -38,14 +38,31 @@ while height < 3000:
 #画像のclass名を選択する
 elements = driver.find_elements_by_class_name('sw-Thumbnail')
 
+'''
+BautifulSoupとWebDriverとの違い
+BeautifulSoup.find => driver.find_element_by_class_name('class_name')
+BeautifulSoup.find_all => driver.find_elements_by_class_name('class_name')
+'''
+
+dict_list = []
+
 #Class名からurlを取得する
-for i,element in emunerate(elements, start=1):
-    element.find
+for i, element in enumerate(elements, start=1):
+    yahoo_image_url = element.find_element_by_tag_name('img').get_attribute('src')
+    raw_url = element.find_elements_by_class_name('sw-ThumbnailGrid__domain')
+    title = element.find_element_by_tag_name('img').get_attribute('alt')
 
+    d = {
+        'raw_url': raw_url,
+        'yahoo_image_url': yahoo_image_url,
+        'title': title
+    }
 
+    dict_list.append(d)
+    
+    sleep(2)
 
-
-
+print(dict_list)
 
 driver.quit()
 
