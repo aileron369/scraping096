@@ -62,8 +62,9 @@ for i, element in enumerate(elements, start=1):
     
     sleep(2)
 
-print(dict_list)
+#print(dict_list)
 
+driver.close()
 driver.quit()
 
 

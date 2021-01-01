@@ -11,19 +11,20 @@ driver = webdriver.Chrome(executable_path=chrome_path, options=options)
 
 
 #driverでurlにアクセスする----------------------------------------------------------------------
-url = 'https://suumo.jp/chintai/tokyo/sc_shinjuku/'
-#url = 'https://www.mizuhobank.co.jp/retail/takarakuji/loto/loto6/index.html?year=2020&month=10'
-#urlがChromeで開く
+url = 'https://www.mizuhobank.co.jp/retail/takarakuji/loto/loto6/index.html?year=2020&month=10'
 driver.get(url)
-#requests.get(url)=>BeautifulSoupではない！
 
 #loto6にアクセスして、キーワード入力、閉じるところまで--------------------------------------
-ps = driver.find_elements_by_tag_name('div')
+#td = driver.find_elements_by_tag_name('td')
+
+class_names = 'js-lottery-number-pc'
+
+td = driver.find_elements_by_xpath("//td[@class='alnCenter extension']")
 sleep(3)
 print('sleep(3)')
 
-for p in ps:
-    print(p.text)
+for t in td:
+    print(t.text)
     sleep(1)
     print('sleep(1)')
 
