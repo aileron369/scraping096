@@ -1,6 +1,7 @@
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+import pandas as pd
 
 #ダウンロードしたChromedriverのPATHを教える(Windowsは'r'を頭に記述)
 chrome_path = r'D:\D-VSCode\chromedriver_win32\chromedriver.exe'
@@ -16,13 +17,15 @@ driver.get(url)
 #loto6にアクセスして、キーワード入力、閉じるところまで--------------------------------------
 
 #Xpathで複数要素の指定ができる
-helds = driver.find_elements_by_xpath("//th[@class='alnCenter bgf7f7f7 js-lottery-issue-pc']") #回数
-sleep(3)
+helds = driver.find_elements_by_xpath("//th[@class='alnCenter bgf7f7f7 js-lottery-issue-pc']")  #回数
+print('回数取得')
+sleep(5)
 date = driver.find_elements_by_xpath("//td[@class='alnCenter js-lottery-date-pc']") #日付
-sleep(3)
+sleep(5)
+print('開始日取得')
 numbers = driver.find_elements_by_xpath("//td[@class='alnCenter extension']") #数字
-sleep(3)
-
+sleep(5)
+print('数字取得')
 
 #print(number)には配列で、メモリ番地が乗っている----------------------------
 #取り出してtextにせいや---＞
@@ -70,19 +73,23 @@ for i,day in enumerate(date_list):
 for i,held in enumerate(held_list):
     master_list[i].insert(0,held)
 
-print(master_list) 
+#print(master_list) 
 
+
+#-------------------------------------------------------------------------------------------------ここからcsvに出力
+df = pd.DataFrame(master_list, columns=['回数', '開催日', '1', '2', '3', '4', '5', '6']) #<--リストを表にする
+
+print(df.to_string(index=False)) #<--左index削除
+
+df.to_csv('loto6_202011.csv', index=None, encoding='utf-8-sig')
+
+print('csv出力済み')
 
 #クローズ------------------------------------------------------------------------
 driver.close()
 driver.quit()
 #ここまで可能
 print('処理終了')
-
-
-#-----------------------------------------------------------------------------ここからcsvに出力
-
-
 
 
 
