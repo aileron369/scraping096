@@ -14,18 +14,17 @@ driver = webdriver.Chrome(executable_path=chrome_path, options=options)
 held_list=[]
 date_list = []
 number_list = []
-master_list = []
+master_list=[]
 
-total_months = 11
-
-for month in range(total_months):
+for month in range(3):
     #driverでurlにアクセスする----------------------------------------------------------------------
-    url = 'https://www.mizuhobank.co.jp/retail/takarakuji/loto/loto6/index.html?year=2020&month={}'
+    url = 'https://www.mizuhobank.co.jp/retail/takarakuji/loto/loto6/index.html?year=2020&month={}'.format(month+1)
     driver.get(url)
     print('-----------------------------------' +str(month+1) + '月---------------------------------------')
     print('URL取得-----sleep(5)')
     sleep(5)#<------------------------------------------------------------------------------------URL遷移から取得までちょっと待つと良い
-
+    #loto6にアクセスして、キーワード入力、閉じるところまで--------------------------------------
+    
     #Xpathで複数要素の指定ができる
     helds = driver.find_elements_by_xpath("//th[@class='alnCenter bgf7f7f7 js-lottery-issue-pc']")  #回数
     print(str(month+1)+'月：回数取得-----sleep(5)')
@@ -42,8 +41,6 @@ for month in range(total_months):
     print('開催回数' + str(len(helds))) #9個ある
     print('開催日数' + str(len(date))) #9個ある
     print('数字総数' + str(len(numbers)))  #54個ある
-
-
 
     #date日付からtextを取り出してheldsリストに入れる----------------------------------------------------------------------------
     for held in helds:
@@ -89,16 +86,15 @@ for i,held in enumerate(held_list):
 
 
 #-------------------------------------------------------------------------------------------------ここからcsvに出力
-df = pd.DataFrame(master_list, columns=['回数', '開催日', '1', '2', '3', '4', '5', '6']) #<--リストを表にする
+df = pd.DataFrame(master_list, columns=['回数','開催日', '1', '2', '3', '4', '5', '6']) #<--リストを表にする
 
-print(df.to_string(index=False))  #<--左index削除
+print(df.to_string(index=False)) #<--左index削除
 
 day = datetime.date.today() #日付取得
 
 df.to_csv('loto6_'+ str(day)+'.csv', index=None, encoding='utf-8-sig')
 
 #print('csv出力済み')
-
 
 
 #クローズ------------------------------------------------------------------------
