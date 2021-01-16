@@ -14,27 +14,29 @@ driver = webdriver.Chrome(executable_path=chrome_path, options=options)
 held_list=[]
 date_list = []
 number_list = []
-master_list=[]
+master_list = []
+#years =[]
+#months = 11
 
-for month in range(3):
+for month in range(1):
     #driverでurlにアクセスする----------------------------------------------------------------------
     url = 'https://www.mizuhobank.co.jp/retail/takarakuji/loto/loto6/index.html?year=2020&month={}'.format(month+1)
     driver.get(url)
     print('-----------------------------------' +str(month+1) + '月---------------------------------------')
-    print('URL取得-----sleep(5)')
-    sleep(5)#<------------------------------------------------------------------------------------URL遷移から取得までちょっと待つと良い
+    print('URL取得-----sleep(10)')
+    sleep(10)#<------------------------------------------------------------------------------------URL遷移から取得までちょっと待つと良い
     #loto6にアクセスして、キーワード入力、閉じるところまで--------------------------------------
     
     #Xpathで複数要素の指定ができる
     helds = driver.find_elements_by_xpath("//th[@class='alnCenter bgf7f7f7 js-lottery-issue-pc']")  #回数
-    print(str(month+1)+'月：回数取得-----sleep(5)')
-    sleep(5)
+    print(str(month+1)+'月：回数取得')
+    sleep(1)
     date = driver.find_elements_by_xpath("//td[@class='alnCenter js-lottery-date-pc']") #日付
-    sleep(5)
-    print(str(month+1)+'月：開始日取得-----sleep(5)')
+    sleep(1)
+    print(str(month+1)+'月：開始日取得')
     numbers = driver.find_elements_by_xpath("//td[@class='alnCenter extension']") #数字
-    sleep(5)
-    print(str(month+1)+'月：数字取得-----sleep(5)')
+    sleep(1)
+    print(str(month+1)+'月：数字取得')
 
     #print(number)には配列で、メモリ番地が乗っている----------------------------
     #取り出してtextにせいや---＞
@@ -104,7 +106,7 @@ driver.quit()
 print('処理終了')
 
 
-
+#print(master_list) 
 
 #（注意）Driver閉じてから、処理を置くとNG->「 Failed to establish a new connection: [WinError 10061] 対象のコンピューターによって拒否されたため、接続できませんでした。」
 
